@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit, Inject, forwardRef, trigger, state, style, transition, animate, keyframes, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Response } from '@angular/http';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { ScrollEvent } from 'ngx-scroll-event';
 
 import { ListingService } from '../service/listing.service';
-import { ToasterService } from 'angular2-toaster';
 import { MainComponent } from './main.component';
 import { NgForm } from "@angular/forms";
 import { Constant } from '../constants/enums';
@@ -18,7 +16,7 @@ import { Constant } from '../constants/enums';
 export class ListingComponent implements OnInit {
 
     constructor(private router: Router, private listingService: ListingService,
-        private toasterService: ToasterService, private progressBar: SlimLoadingBarService, @Inject(forwardRef(() => MainComponent)) private publicComponent: MainComponent) {
+        @Inject(forwardRef(() => MainComponent)) private publicComponent: MainComponent) {
     }
 
     HotelsList: any = [];
@@ -31,11 +29,9 @@ export class ListingComponent implements OnInit {
     imagesURL: string = 'http://d3snwcirvb4r88.cloudfront.net/images/';
     showloader: boolean = false;
     isDisable: boolean = true;
-    //classses
-    filterLabel: string;
+
 
     ngOnInit() {
-        this.filterLabel = 'filterLabel';
         this.conf.rangeShort = this.rangeShort;
         this.conf.rangeLong = this.rangeLong;
         this.conf.pageNo = "1";
@@ -58,7 +54,7 @@ export class ListingComponent implements OnInit {
                         element.imagesURL = this.imagesURL + (element.photos["0"].imagesMap.thumbnail).split('_')[0] + '/' + (element.photos["0"].imagesMap.thumbnail);
                     }
                 });
-               // console.log(this.HotelsList);
+                // console.log(this.HotelsList);
                 this.showloader = false;
                 // this.progressBar.complete();
                 //this.isDisable = false;
@@ -68,7 +64,6 @@ export class ListingComponent implements OnInit {
     }
 
     resetFilters() {
-        this.classChanged();
         this.ApartmentTypeFilter = [];
         this.FurnishedFilter = [];
         this.rangeShort = 0;
@@ -80,6 +75,7 @@ export class ListingComponent implements OnInit {
 
     filterHotels(filterType, filter) {
         this.conf.pageNo = "1";
+        this.searchInfo = {};
         this.HotelsList = [];
         let index: number;
 
@@ -90,7 +86,7 @@ export class ListingComponent implements OnInit {
             } else {
                 this.ApartmentTypeFilter.push(filter);
             }
-           // console.log(this.ApartmentTypeFilter);
+            // console.log(this.ApartmentTypeFilter);
             this.conf.type = "";
             this.ApartmentTypeFilter.forEach(element => {
                 this.conf.type = this.conf.type.concat(element.toString() + ',');
@@ -152,10 +148,11 @@ export class ListingComponent implements OnInit {
     }
 
     getAddress($event) {
-       // console.log($event);
+        // console.log($event);
     }
 
     autoCompleteCallback1(selectedData: any) {
+        this.searchInfo = {};
         this.HotelsList = [];
         this.conf = {};
         this.conf.pageNo = "1";
@@ -172,7 +169,7 @@ export class ListingComponent implements OnInit {
                         element.imagesURL = this.imagesURL + (element.photos["0"].imagesMap.thumbnail).split('_')[0] + '/' + (element.photos["0"].imagesMap.thumbnail);
                     }
                 });
-               // console.log(this.HotelsList);
+                // console.log(this.HotelsList);
             },
             (error) => { console.log("Error getting hotels list") }
             );
@@ -192,9 +189,4 @@ export class ListingComponent implements OnInit {
 
     }
 
-    classChanged() {
-        document.getElementById('BHK2').className = 'fbsearch';
-        document.getElementById('upperClass').className = 'nbCheckbox btnFilter';
-        document.getElementById('lablebhk').className = 'filterLabel';
-    }
 }

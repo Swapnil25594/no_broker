@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, trigger, state, style, transition, animate, keyframes } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';

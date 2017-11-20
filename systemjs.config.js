@@ -34,7 +34,6 @@
             'aws-sdk': 'npm:aws-sdk',
             'mydatepicker': 'npm:mydatepicker/bundles/mydatepicker.umd.min.js',
             'ng4-geoautocomplete': 'npm:ng4-geoautocomplete/bundles/ng4-geoautocomplete.umd.min.js',
-            'ng2-slider-component': 'npm:ng2-slider-component/ng2-slider.component.js',
             'angular2-infinite-scroll': 'npm:angular2-infinite-scroll/angular2-infinite-scroll.js',
         },
         // packages tells the System loader how to load when no filename and/or no extension

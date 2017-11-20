@@ -16,15 +16,11 @@ const browserify = require('gulp-browserify');
 const stringify = require('stringify');
 const uglify = require('gulp-uglify');
 const ngAnnotate = require('gulp-ng-annotate');
-const KarmaServer = require('karma').Server;
-
 
 const options = {
     env: 'development',
     outputClientDir: 'build/',
-    startcss: [],
-    platformcss: [],
-    css: ['./css/no_broker.css', './css/style.css']
+    css: ['./css/no_broker.css']
 };
 
 /**
@@ -54,8 +50,6 @@ gulp.task('viewer', () => {
     return gulp.src('src/Viewer/**/*.*')
         .pipe(gulp.dest(options.outputClientDir + '/Viewer'));
 });
-
-
 
 /**
  * Compile TypeScript sources and create sourcemaps in build directory.
@@ -89,21 +83,9 @@ gulp.task("libs", () => {
         'rxjs/**/*.js',
         'zone.js/dist/**',
         '@angular/**/bundles/**',
-        'ng2-slim-loading-bar/bundles/**',
-        'angular2-toaster/**/bundles/**',
-        'ng2-date-picker/**',
-        'aws-sdk/**/*.js',
-        'web-animations-js/**',
-        'mydatepicker/bundles/**',
-        'moment/**',
-        'evaporate/evaporate.js',
-        'node-forge/dist/forge.min.js',
-        'ng-pick-datetime/**',
         'ng4-geoautocomplete/bundles/**',
-        'ng2-slider-component/**',
         'ng2-styled-directive/**',
         'ng2-slideable-directive/**',
-        'angular2-infinite-scroll/**',
         'ngx-scroll-event/**'
     ], { cwd: "node_modules/**" }) /* Glob required here. */
         .pipe(gulp.dest("build/lib"));
@@ -124,45 +106,6 @@ gulp.task('css', () => {
             sound: "Pop"
         }));
 });
-
-gulp.task('fonts', () => {
-    return gulp.src('./font/**')
-        .pipe(gulp.dest(options.outputClientDir + 'font'));
-});
-
-gulp.task('icons', () => {
-    return gulp.src('./icon/**')
-        .pipe(gulp.dest(options.outputClientDir + 'icon'));
-});
-
-gulp.task('platformcss', () => {
-    var config = {};
-    return gulp.src(options.platformcss)
-        .pipe(cssmin())
-        .pipe(concat('platform.min.css'))
-        .pipe(gulp.dest(options.outputClientDir + '/css'))
-        .pipe(notify({
-            title: 'Gulp',
-            subtitle: 'success',
-            message: 'Platform task completed',
-            sound: "Pop"
-        }));
-});
-
-gulp.task('startcss', () => {
-    var config = {};
-    return gulp.src(options.startcss)
-        .pipe(cssmin())
-        .pipe(concat('start.min.css'))
-        .pipe(gulp.dest(options.outputClientDir + '/css'))
-        .pipe(notify({
-            title: 'Gulp',
-            subtitle: 'success',
-            message: 'Startcss task completed',
-            sound: "Pop"
-        }));
-});
-
 /**
  * Watch for changes in TypeScript, HTML and CSS files.
  */
@@ -181,25 +124,11 @@ gulp.task('watch', function () {
     });
 });
 
-gulp.task("testOnce", ["build"], function (done) {
-    new KarmaServer({
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
-    }, done).start();
-
-});
-
-gulp.task("test", ["build"], function (done) {
-    new KarmaServer({
-        configFile: __dirname + '/karma.conf.js'
-    }, done).start();
-
-});
 
 /**
  * Build the project.
  */
-gulp.task("build", ['compile', 'resources', 'libs', 'assets', 'viewer', 'css', 'fonts', 'platformcss', 'startcss', 'icons'], () => {
+gulp.task("build", ['compile', 'resources', 'libs', 'assets', 'viewer', 'css'], () => {
     console.log("Building the project ...");
 });
 
