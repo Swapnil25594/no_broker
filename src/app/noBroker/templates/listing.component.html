@@ -1,0 +1,461 @@
+<nav class="navbar navbar-fixed-top navbar-custom navbar-border" style="padding-right:0px;position:fixed">
+    <div class="navbar-header">
+        <a class="navbar-toggle">
+        <i class="icon-reorder"></i>
+        Menu
+        </a>
+        <a class="navbar-brand-custom"><img src="//assets.nobroker.in/static/img/logos/nb_logo_trans_2.png" height="50px"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="main-nav">
+        <div class="navbar-item productTypeNav pull-left">
+            <span class="productTypeSelector" id="productTypeSelector">
+        <span class="pickedProductType" id="pickedProductType">
+        Rent
+        </span>
+            <i id="navDownArrow" class="navDownArrow icon-angle-down"></i>
+            </span>
+            <span>
+        <ul class="productTypeSelectDropdown hide">
+        <li class="border-bottom-ebebeb pickProductType">
+        <p>Rent</p>
+        </li>
+        <li class="border-bottom-ebebeb pickProductType">
+        <p>Buy</p>
+        </li>
+        <li class="border-bottom-ebebeb pickProductType">
+        <p>PG/Hostel</p>
+        </li>
+        <li class=" pickProductType">
+        <p>Flatmates</p>
+        </li>
+        </ul>
+        </span>
+        </div>
+        <div id="menuTab" class="navbar-item pull-right">
+            <div class="menuPadding">
+                <a onclick="showOrHideMenuDropDown();">
+        <i class="icon-reorder"></i>
+        Menu
+        </a>
+            </div>
+        </div>
+        <div class="navbar-item-hover navbar-item pull-right">
+            <div>
+                <a style="">Log in</a>
+            </div>
+        </div>
+        <div class="navbar-item-hover navbar-item pull-right">
+            <div>
+                <a id="commingSoonSignUp" style="">Sign up</a>
+            </div>
+        </div>
+        <!-- Post Your Property Modal -->
+        <div class="navbar-item pull-right hidden-sm">
+            <div class="rightborder">
+                <a class="hideInfbApp btn navbar-right tooltips btn-nbprimary" style="">Post Your Property </a>
+            </div>
+        </div>
+        <div class="hideInfbApp">
+        </div>
+    </div>
+</nav>
+
+<ng2-slim-loading-bar></ng2-slim-loading-bar>
+
+<div class="row navbar-default nav-subtab" id="navSubTab" style="">
+    <div class="container" id="subTabContainer">
+        <div class="row">
+            <div class="col-sm-4" id="tabHeader" style="padding-top: 7px;padding-left: 14px;padding-right: -4px;">
+                <div class="input-group">
+                    <ng4geo-autocomplete (componentCallback)="autoCompleteCallback1($event)"></ng4geo-autocomplete>
+
+                    <ul id="SearchSavedDetail" class="dropdown-menu" style=" position: absolute; position: absolute;left: 0px;top: 33px;border-right-width: 1px;border-bottom-width: 1px;border-left-width: 1px;width: 91.5%;display: none;background-color: white;list-style-type: none;"></ul>
+                </div>
+
+                <a style="display:none;" class="show-hide-filter tooltips btn btn-less-padding" title="">
+                        <i class="icon icon-filter"></i> Filters
+                  </a>
+            </div>
+            <div class="col-sm-3 ">
+                <div class="travelTimeFilter dropdown hide">
+                    <input type="hidden" value="15" id="travelMinutes">
+                    <div class="input-group dropdown-toggle" id="travelTimeInput">
+                        <input type="text" class="form-control">
+                        <span class="input-group-addon"> <span class="icon icon-pencil"></span></span>
+                    </div>
+                    <ul class="dropdown-menu travelTimeDropdownContainer">
+                        <div class="col-md-12 col-sm-12">Select travel time range from your area of interest.</div>
+                        <div class="col-md-12 sliderContainer">
+                            <div class="travelTimeSlider noUi-target noUi-ltr noUi-horizontal noUi-background" id="travelTimeSlider">
+                                <div class="noUi-base">
+                                    <div class="noUi-origin noUi-connect" style="left: 0%;">
+                                        <div class="noUi-handle noUi-handle-lower"></div>
+                                    </div>
+                                </div>
+                                <div class="noUi-pips noUi-pips-horizontal">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="trafficType" class="trafficCheckBox">
+        <input type="checkbox"  id="trafficType" name="traffic" value="true"> Include peak hours travel time
+        <span class="check"></span>
+        </label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <button class="btn btn-block btn-nbprimary">Apply</button>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2" id="nearByFilterContainer">
+                <label for="nearByFilter" class="greenCheckbox ">
+        <input type="checkbox" id="nearByFilter" class="nbCheckbox" name="nearby" value="true"> Include Nearby Properties
+        <span class="check"></span>
+        </label>
+            </div>
+            <div class="col-sm-2 pull-right" style="text-align:right;margin-top:4px;position:relative;">
+                <div class="map-list-switch">
+                    <a id="listView" name="resultTab" class="left btn btn-md btn-default result-switcher btn-list selected"> List </a>
+                    <a id="mapView" style="" name="resultTab" class="right btn btn-md btn-default result-switcher btn-map "> Map </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<br>
+<br>
+
+
+
+<div class="mywrapper">
+    <div class="container listing-page" id="container">
+        <div class="row">
+            <input type="hidden" id="isShared" value="false">
+            <div class="col-sm-3 search-bin margin-top-5 newFilters" id="searchBinHolder">
+                <div class="panel panel-info list-card" id="search">
+                    <div class="panel-body no-pad" id="searchBody">
+                        <div class="filterPanel header">
+                            <span class="filterHeader"> Filters</span>
+                            <a id="resetFilter" name="resetTab" class="pull-right"> <i class="icon-undo"></i>Reset</a>
+                        </div>
+                        <form>
+                            <!-- apartment types-->
+                            <div class="filterPanel">
+                                <span class="filterPanelHeader ">Apartment Type</span>
+                                <div class="nbCheckbox btnFilter">
+                                    <input type="checkbox" id="RK1" class="fbsearch" value="RK1" name="propType">
+                                    <label for="RK1">
+                                   <span class="filterLabel"  (click)="filterHotels('type','RK1')">1 RK</span>
+                                </label>
+                                </div>
+                                <div class="nbCheckbox btnFilter">
+                                    <input type="checkbox" id="BHK1" class="fbsearch user-success" value="BHK1" name="propType">
+                                    <label for="BHK1">
+                    <span class="filterLabel" (click)="filterHotels('type','BHK1')">1 BHK</span>
+                     </label>
+                                </div>
+                                <div class="nbCheckbox btnFilter" id='upperClass'>
+                                    <input type="checkbox" id="BHK2" class="fbsearch" value="BHK2" name="propType">
+                                    <label for="BHK2">
+                    <span class="filterLabel" (click)="filterHotels('type','BHK2')" id="lablebhk">2 BHK</span>
+                        </label>
+                                </div>
+                                <div class="nbCheckbox btnFilter">
+                                    <input type="checkbox" id="BHK3" class="fbsearch" value="BHK3" name="propType">
+                                    <label for="BHK3">
+                        <span class="filterLabel" (click)="filterHotels('type','BHK3')">3 BHK</span>
+                            </label>
+                                </div>
+                                <div class="nbCheckbox btnFilter">
+                                    <input type="checkbox" id="BHK4" class="fbsearch user-success" value="BHK4">
+                                    <label for="BHK4">
+                                        <span class="filterLabel" (click)="filterHotels('type','BHK4')">4 BHK</span>
+                        </label>
+                                </div>
+                                <div class="nbCheckbox btnFilter">
+                                    <input type="checkbox" id="BHK4PLUS" class="fbsearch" value="BHK4PLUS" name="propType">
+                                    <label for="BHK4PLUS">
+                        <span class="filterLabel" (click)="filterHotels('type','BHK4PLUS')">4+ BHK</span>
+                        </label>
+                                </div>
+                            </div>
+                            <div class="filterPanel">
+                                <span class="filterPanelHeader ">Rent Range (per month)</span>
+                                <div class="nbRangeSlider">
+                                    <div class="nb-range-drag">
+                                        <div class="nb-range-handle" style="width: 218.919px; left: 0px;"></div>
+                                        <div class="nb-left-handle" draggable="false" style="left: -12px;"></div>
+                                        <div class="nb-right-handle" draggable="false" style="left: 206.919px;"></div>
+                                        <div class="nb-range-background"></div>
+                                    </div>
+                                    <div class="nb-range-input">
+                                        <div class="nb-range-input-min">
+                                            <p>₹</p> <input type="text" name="rangeShort" [(ngModel)]="rangeShort" (change)="onRentChange(1,rangeShort)"
+                                                class="user-success"><span style="display: inline-block;"></span></div>
+                                        <div class="nb-range-input-max">₹ <input type="text" name="rangeLong" [(ngModel)]="rangeLong" (change)="onRentChange(2,rangeLong)"><span></span></div>
+                                    </div>
+                                </div><input id="priceMin" style="display:none"><input id="priceMax" style="display:none">
+                            </div>
+                            <div class="filterPanel">
+                                <span class="filterPanelHeader ">Furnishing</span>
+                                <div class="">
+                                    <input type="checkbox" class="fbsearch" (click)="filterHotels('furnishing','FULLY_FURNISHED')" name="furnishing" value="FULLY_FURNISHED">
+                                    <label for="furnished_full"></label>
+                                    <span class="">Full</span>
+                                </div>
+                                <div class="">
+                                    <input type="checkbox" class="fbsearch" (click)="filterHotels('furnishing','SEMI_FURNISHED')" name="furnishing" value="SEMI_FURNISHED">
+                                    <label for="furnished_semi"></label>
+                                    <span class="">Semi</span>
+                                </div>
+                                <div class="">
+                                    <input type="checkbox" class="fbsearch" (click)="filterHotels('furnishing','NOT_FURNISHED')" name="furnishing" value="NOT_FURNISHED">
+                                    <label for="furnished_none"></label>
+                                    <span class="">No</span>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="advancedFilterArea" class="">
+                            <div class="filterPanel header">
+                                <span class="filterHeader"> Advanced Filters </span> <span id="filterCount" style="display: none;">2</span>
+                                <a id="advanceFilterToggle" href="#" class="pull-right"> <i class="icon icon-double-angle-up"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .dropdown-menu>li>a {
+                        clear: none;
+                    }
+
+                    a.first {
+                        float: left;
+                        padding: 3px 5px;
+                    }
+
+                    a.second {
+                        font-size: 12px;
+                        padding: 5px 5px;
+                    }
+                </style> <a href="#top" class="cd-top">Top</a>
+            </div>
+            <div class="col-sm-7 main-content default resale-main">
+                <div id="showHideFilterPanelOnMapView" class="btn-close pull-right">
+                    <i class="icon icon-angle-left"></i>
+                </div>
+                <div class="tabbable">
+                    <div class="tab-content" style="background:transparent">
+                        <div class="tab-pane active" id="panel-list">
+                            <div id="listResults">
+                                <input type="hidden" value="1" id="mc">
+                                <div class="breadcrumb_card" style="display: block;">
+                                    <div class="row">
+                                        <div class="col-sm-7 col-md-8 margin_top_4">
+                                            <ul class="breadcrumb" id="pageBreadCrumb">
+                                                <li class="inactiveBread">
+                                                    <a property="item" typeof="WebPage" href="/">
+                                                      <span  class="breadcrumbItem"> Home</span></a>
+                                                    <meta property="position" content="1">
+                                                </li>
+                                                <li class="inactiveBread">
+                                                    <a property="item" typeof="WebPage" href="/" id="breadcrumb_city_url">
+                                                   <span class="breadcrumbItem" id="breadcrumb_city"> {{searchInfo.city}} </span></a>
+                                                    <meta property="position" content="2">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div id="h1Div">
+                                        <h1 class="h1Title ellipsisText">
+                                            <span id="resultsCount">{{searchInfo.total_count}}</span> matching properties
+                                            in
+                                            <span id="loc">{{searchInfo.city}}</span>
+                                            <span id="nearbyText" class=" hide "> and nearby</span>
+                                        </h1>
+                                    </div>
+                                </div>
+                                <!-- infinite scroll -->
+                                <div detect-scroll (onScroll)="handleScroll($event)" [bottomOffset]="20"></div>
+                                <!--property entry-->
+                                <div *ngFor="let hotel of HotelsList">
+                                    <div class="card">
+                                        <div class="card-title">
+                                            <div class="card-header-title">
+                                                <a class="card-link-detail" href="" target="_blank" onclick="setSeenPropertyMarker('ff8081815fb4f579015fb5372d732859')" title="1 BHK in Kothrud"
+                                                    style="text-transform: capitalize; margin: 0px;">
+                                                    <h2>
+                                                        {{hotel.propertyTitle}}
+                                                        <i class="icon icon-external-link"></i>
+                                                    </h2>
+                                                </a>
+                                                <h5>
+                                                    {{hotel.street}}
+                                                    <span class="" role="button" data-toggle="modal" title="view location on map"><img src="//assets.nobroker.in/static/img/location_2.png"></span>
+                                                </h5>
+                                                <!-- <div class="noOfViews hide">15 people are viewing this house right now</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="overview open_detail_page">
+
+                                                <div class="col-sm-4 solid-border-right" style="border-right:1px solid #EBEBEB;">
+                                                    <h3>
+                                                        {{hotel.propertySize}} sqft
+                                                    </h3>
+                                                    <h5>
+                                                        Builtup
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-4 solid-border-right">
+                                                    <h3>
+                                                        <i class="icon-inr icon-x icon inr_resale" title="Rs"></i>₹ {{hotel.deposit}}
+                                                    </h3>
+                                                    <h5>
+                                                        Deposit
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <h3>
+                                                        <i class="icon-inr icon-x icon inr_resale" title="Rs"></i>₹ {{hotel.rent}}
+
+                                                    </h3>
+
+                                                    <h5>
+                                                        Rent (Negotiable)
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                            <div class="details">
+                                                <div class="col-sm-5">
+                                                    <span class="seenMarker">VIEWED</span>
+                                                    <div class="card-image">
+                                                        <div class="nobrokerSlider" style="height: 180px;">
+                                                            <div class="nobrokerSliderImg" style="display: block;"><img src={{hotel.imagesURL}} style="height: auto; width: 100%; top: -5.5px;">
+                                                            </div>
+                                                        </div>
+                                                        <span class="card-title image-overlay">{{hotel.photos.length}} Photos</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <div class="row detail-summary open_detail_page">
+                                                        <div class="col-sm-12">
+                                                            <div class="row  summary-row border-bottom text-align-left">
+                                                                <div class="property-furnishing col-sm-6 col-xs-6 solid-border-right text-align-left">
+
+                                                                    <!-- Extra if to remove space between Un and Furnished to make it UnFurnished -->
+                                                                    <h5 class="semi-bold">{{hotel.furnishingDesc}} Furnished</h5>
+                                                                </div>
+                                                                <div class="property-age col-sm-6 col-xs-6 text-align-left">
+                                                                    <h5 class="semi-bold">{{hotel.propertyAge}} year old</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row summary-row text-align-left">
+
+                                                                <div class="col-sm-6 col-xs-6 solid-border-right text-align-left">
+                                                                    <div class="col-sm-3 summary-icon-top" style="margin-left: -22px;margin-right: 8px;">
+                                                                        <img src="//assets.nobroker.in/static/img/resale/male_Te.png">
+                                                                    </div>
+                                                                    <h5 class="semi-bold" title="Available for Bachelor's">
+                                                                        {{hotel.leaseType}}
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="col-sm-6 col-xs-6 ">
+                                                                    <div class="col-sm-3 summary-icon-top" style="margin-left: -22px;margin-right: 8px;">
+                                                                        <img src="//assets.nobroker.in/static/img/resale/possesion_icon.png">
+                                                                    </div>
+                                                                    <h5 class="semi-bold" title=" Immediate Possession ">
+                                                                        Ready to Move
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row card-action action-bar">
+                                                        <div class="col-sm-5 col-md-7 no-pad">
+                                                            <button class="btn btn-block btn-ownercontact btn-ownercontact-detail">Get Owner Details</button>
+                                                        </div>
+                                                        <div class="col-sm-7 col-md-5">
+
+                                                            <button class="btn btn-sm btn-default btn-shortlist-property" type="button" title="Click to Shortlist" style="width: 50px;height: 37px; margin-right: 10px;">
+                                                      <i class="icon icon-heart-empty property-list-flag" style="color:#6E6D6D;;font-size: large;"></i>
+                                                      </button>
+                                                            <button class="btn btn-sm btn-default tooltips" type="button" title="Report Abuse">
+                                                          <img src="//assets.nobroker.in/static/img/resale/report_abuse_2.png">
+                                                          </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer visible-xs">
+                                            <div class="row hidden-xs">
+                                                <div class="col-md-6">
+                                                    <a class="btn btn-sm btn-default" type="button" title="Report Incorrect Data" style="margin-left:10px;">
+                                 <i class="icon icon-flag icon-large brown"></i> 
+                                 &nbsp;Report
+                                 </a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+                            </div>
+                            
+                            <!--show more button-->
+                            <div class="loading-results text-center" style="display: none;">
+                                <img src="//assets.nobroker.in/static/img/loading-results.gif" width="30" height="30">
+                            </div>
+                            <div class="row" id="showMoreDiv" style="display: none;">
+                                <div class="col-xs-3 col-sm-6"></div>
+                                <div class="col-xs-5 col-sm-6 pull-left col-sm-pull-1">
+                                    <ul class="pagination pagination-lg no-margin">
+                                        <li>
+                                            <div class="btn btn-default" id="showMore" data-page="1">Show More</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Show paginated links here -->
+                            <!-- no results message-->
+                            <div class="row" id="noMoreResults" style="padding: 10px;">
+                                <div class="panel panel-default">
+                                    <div class="panel-footer" style="padding:5px 10px;">
+                                        <div class="row" id="nearBylocalityOnListPage">
+                                            <h4 class="headerText">Didn't find what you are looking for? </h4>
+                                            <h4 class="headerText" style="border-bottom: 1px solid #EBEBEB;font-size: initial;padding-bottom: 12px"> Explore nearby localities </h4>
+                                        </div>
+                                        <h4 id="nearBylocalityOnListPage_orText" style="text-align:center" class="seperator">or</h4>
+                                        <p style="text-align:center"><a id="reqButton" class="btn btn-primary navbar-btn dropdown btn-nbprimary" role="button">Post Your Requirement</a><br>                                            and we will send an email with matching properties</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--tab pane1 ends-->
+                        <div class="tab-pane " id="panel-map" style="height:600px;">
+                            <div id="map-canvas" class="col-sm-12" style="height:100%; width: 75%; left: 25%;" data-latitude="18.5204303" data-longitude="73.85674369999992"></div>
+                        </div>
+                        <!--tab pan2 ends-->
+                    </div>
+                    <!--tab content ends-->
+                </div>
+                <!--tabbleable ends-->
+            </div>
+        </div>
+    </div>
+</div>
+<ng2-slim-loading-bar></ng2-slim-loading-bar>

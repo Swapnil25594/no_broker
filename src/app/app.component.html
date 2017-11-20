@@ -1,0 +1,5 @@
+<router-outlet></router-outlet>
+<div class="loader-wrapper full-screen" *ngIf="isNavigating">
+    <div class="spinner spinner-circle"></div>
+</div>
+<toaster-container [toasterconfig]="toasterconfig">
