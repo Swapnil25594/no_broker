@@ -59,7 +59,7 @@ export class ListingComponent implements OnInit {
                 // this.progressBar.complete();
                 //this.isDisable = false;
             },
-            (error) => { console.log("Error getting hotels list"); this.progressBar.complete(); this.isDisable = false; }
+            (error) => { console.log("Error getting hotels list"); this.isDisable = false; }
             );
     }
 
